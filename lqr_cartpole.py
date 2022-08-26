@@ -22,7 +22,7 @@ def main():
     max_step = 500
 
     env = gym.make('CartPole-v0')
-    # env.seed(1)
+    env.seed(1)
 
     gravity = env.gravity
     masscart = env.masscart
