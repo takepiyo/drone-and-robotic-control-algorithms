@@ -16,7 +16,7 @@ def solve_riccati_arimoto_potter(A, B, Q, R):
     pass
 
 
-def main():
+if __name__ == "__main__":
     alpha = 10.0
     beta = 1.0
     max_step = 500
@@ -74,7 +74,3 @@ def main():
     ax[1].set_title("Control Value(Force)")
     ax[1].grid(True)
     plt.show()
-
-
-if __name__ == "__main__":
-    main()

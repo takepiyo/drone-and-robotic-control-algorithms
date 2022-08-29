@@ -89,7 +89,7 @@ def plot_log_and_predict(axes, x, u, obs_log, control_log, t, predict_horizon):
     plt.pause(1e-8)
 
 
-def main():
+if __name__ == '__main__':
     alpha = 10.0
     beta = 1.0
     max_step = 500
@@ -140,7 +140,3 @@ def main():
         plot_log_and_predict(axes, x, u, obs_log,
                              control_log, t, predict_horizon)
     print(f"{total_reward=}")
-
-
-if __name__ == '__main__':
-    main()

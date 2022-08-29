@@ -1,3 +1,0 @@
-[submodule "mppi_pendulum"]
-	path = mppi_pendulum
-	url = git@github.com:ferreirafabio/mppi_pendulum.git

@@ -1,5 +1,5 @@
 import gym
-import Env
+import my_gym_env
 import numpy as np
 import matplotlib.pyplot as plt
 
