@@ -25,12 +25,11 @@ class DoubleSlit1DPathIntegralSampling:
             while not done:
                 state, cost, done, _ = self.env.step(0)
             if self.env.n + 1 == self.env.max_n:
-                self.sampled_cost.append(
-                    math.exp(-self.phi(state[0]) / self.v))
+                self.sampled_cost.append(math.exp(-self.phi(state[0]) / self.v))
                 self.noise_history.append(self.env.noise_array)
             self.traj.append((self.env.n, self.env.x_array))
         if not len(self.noise_history) > 0:
-            print('All sample did not get to the goal')
+            print("All sample did not get to the goal")
             return
         self.noise_history = np.stack(self.noise_history)
         # env.render_multiple_path(self.traj)
@@ -42,7 +41,7 @@ class DoubleSlit1DPathIntegralSampling:
 
 
 if __name__ == "__main__":
-    env = gym.make('DoubleSlit1D-v0')
+    env = gym.make("DoubleSlit1D-v0")
     ctrl = DoubleSlit1DPathIntegralSampling(env, 100000)
 
     traj = []

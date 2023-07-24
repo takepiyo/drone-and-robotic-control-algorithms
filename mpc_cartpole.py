@@ -28,7 +28,7 @@ def opt_mpc_with_input_const(A, B, N, Q, R, P, x0, umax=None, umin=None):
     RR = np.kron(np.eye(N), R)
     QQ = linalg.block_diag(np.kron(np.eye(N - 1), Q), P)
 
-    H = (BB.T.dot(QQ).dot(BB) + RR)
+    H = BB.T.dot(QQ).dot(BB) + RR
 
     gx0 = BB.T.dot(QQ).dot(AA).dot(x0)
     P = matrix(H)
@@ -89,13 +89,13 @@ def plot_log_and_predict(axes, x, u, obs_log, control_log, t, predict_horizon):
     plt.pause(1e-8)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     alpha = 10.0
     beta = 1.0
     max_step = 500
     predict_horizon = 100
 
-    env = gym.make('CartPole-v0')
+    env = gym.make("CartPole-v0")
 
     gravity = env.gravity
     masscart = env.masscart
@@ -103,18 +103,16 @@ if __name__ == '__main__':
     length = env.length
     dt = env.tau
 
-    k = length * (4. / 3 - (masspole / (masspole + masscart)))
+    k = length * (4.0 / 3 - (masspole / (masspole + masscart)))
 
-    A = np.array([[0., 1., 0., 0.],
-                  [0., 0., gravity / k, 0.],
-                  [0., 0., 0., 1.],
-                  [0., 0., gravity / k, 0.]]) * dt + np.eye(4)
+    A = np.array(
+        [[0.0, 1.0, 0.0, 0.0], [0.0, 0.0, gravity / k, 0.0], [0.0, 0.0, 0.0, 1.0], [0.0, 0.0, gravity / k, 0.0]]
+    ) * dt + np.eye(4)
 
-    B = np.array([[0.], [1. / (masscart + masspole)], [0.], [-1. / k]]) * dt
+    B = np.array([[0.0], [1.0 / (masscart + masspole)], [0.0], [-1.0 / k]]) * dt
     (nx, nu) = B.shape
 
-    Q = alpha * np.array([[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0],
-                          [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]])
+    Q = alpha * np.array([[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]])
     R = beta * np.eye(nu)
     P = Q
     obs = env.reset()
@@ -127,8 +125,7 @@ if __name__ == '__main__':
     fig, axes = plt.subplots(nx + nu - 2, tight_layout=True, figsize=(10, 50))
 
     for t in range(max_step):
-        x, u = opt_mpc_with_input_const(A=A, B=B, N=predict_horizon, Q=Q, R=R,
-                                        P=P, x0=x0, umax=10.0, umin=-10.0)
+        x, u = opt_mpc_with_input_const(A=A, B=B, N=predict_horizon, Q=Q, R=R, P=P, x0=x0, umax=10.0, umin=-10.0)
         force = u[0]
         env.env.force_mag = force[0]
         obs, reward, done, _ = env.step(1)
@@ -137,6 +134,5 @@ if __name__ == '__main__':
         env.render()
         control_log.append(force)
         obs_log.append(obs)
-        plot_log_and_predict(axes, x, u, obs_log,
-                             control_log, t, predict_horizon)
+        plot_log_and_predict(axes, x, u, obs_log, control_log, t, predict_horizon)
     print(f"{total_reward=}")

@@ -21,7 +21,7 @@ if __name__ == "__main__":
     beta = 1.0
     max_step = 500
 
-    env = gym.make('CartPole-v0')
+    env = gym.make("CartPole-v0")
     env.seed(1)
 
     gravity = env.gravity
@@ -29,18 +29,17 @@ if __name__ == "__main__":
     masspole = env.masspole
     length = env.length
 
-    k = length * (4. / 3 - (masspole / (masspole + masscart)))
+    k = length * (4.0 / 3 - (masspole / (masspole + masscart)))
 
-    A = np.array([[0., 1., 0., 0.],
-                  [0., 0., gravity / k, 0.],
-                  [0., 0., 0., 1.],
-                  [0., 0., gravity / k, 0.]])
+    A = np.array(
+        [[0.0, 1.0, 0.0, 0.0], [0.0, 0.0, gravity / k, 0.0], [0.0, 0.0, 0.0, 1.0], [0.0, 0.0, gravity / k, 0.0]]
+    )
 
-    B = np.array([[0.], [1. / (masscart + masspole)], [0.], [-1. / k]])
+    B = np.array([[0.0], [1.0 / (masscart + masspole)], [0.0], [-1.0 / k]])
 
-    target = np.array([1.0, 0., 0., 0.])
+    target = np.array([1.0, 0.0, 0.0, 0.0])
     # b_ue = A.dot(target)
-    target_u = - np.linalg.pinv(B).dot(A.dot(target))
+    target_u = -np.linalg.pinv(B).dot(A.dot(target))
 
     Q = alpha * np.eye(4)
     R = beta * np.eye(1)
@@ -67,7 +66,7 @@ if __name__ == "__main__":
     print(f"{t=},{total_reward=}")
     fig, ax = plt.subplots(2, tight_layout=True)
     ax[0].plot(obs_log)
-    ax[0].legend(['x', 'x_dot', 'theta', 'theta_dot'])
+    ax[0].legend(["x", "x_dot", "theta", "theta_dot"])
     ax[0].set_title("State Variables")
     ax[0].grid(True)
     ax[1].plot(control_log)
